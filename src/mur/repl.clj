@@ -12,12 +12,12 @@
   nil)
 
 (defn setup!
-  [f]
-  (alter-var-root #'initializer (constantly f)))
+  [sym]
+  (alter-var-root #'initializer (constantly sym)))
 
 (defn boot!
   []
-  (alter-var-root #'system (fn [_] (initializer)))
+  (alter-var-root #'system (constantly ((find-var intitializer))))
   (alter-var-root #'system c/start)
   :ok)
 
