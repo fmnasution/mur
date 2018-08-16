@@ -5,6 +5,7 @@
                  [http-kit "2.3.0" :scope "provided"]
                  [com.datomic/datomic-free "0.9.5697" :scope "provided"]
                  [io.rkn/conformity "0.5.1" :scope "provided"]
+                 [org.clojure/tools.namespace "0.3.0-alpha4"]
                  ;; ---- cljc ----
                  [com.stuartsierra/component "0.3.2"]
                  [bidi "2.1.3" :scope "provided"]
