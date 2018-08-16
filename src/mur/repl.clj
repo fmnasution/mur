@@ -17,7 +17,7 @@
 
 (defn boot!
   []
-  (alter-var-root #'system (constantly ((find-var intitializer))))
+  (alter-var-root #'system (constantly ((find-var initializer))))
   (alter-var-root #'system c/start)
   :ok)
 
