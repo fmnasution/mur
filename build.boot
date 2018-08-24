@@ -19,7 +19,7 @@
  '[adzerk.bootlaces :refer [bootlaces! build-jar push-snapshot push-release]])
 
 (def +version+
-  "0.1.5-SNAPSHOT")
+  "0.1.6-SNAPSHOT")
 
 (bootlaces! +version+)
 
