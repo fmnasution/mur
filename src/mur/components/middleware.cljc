@@ -1,6 +1,21 @@
 (ns mur.components.middleware
   (:require
-   [com.stuartsierra.component :as c]))
+   [com.stuartsierra.component :as c]
+   #?@(:clj  [[clojure.spec.alpha :as s]]
+       :cljs [[cljs.spec.alpha :as s]])))
+
+;; =================================================================
+;; middleware spec
+;; =================================================================
+
+(s/def ::entries
+  (s/coll-of
+   (s/or :unary fn?
+         :n-ary (s/cat
+                 :entry fn?
+                 :args  (s/* (s/or
+                              :component (partial = :component)
+                              :value     any?))))))
 
 ;; =================================================================
 ;; protocols
@@ -52,4 +67,4 @@
 
 (defn make-middleware
   [entries]
-  (map->Middleware {:entries entries}))
+  (map->Middleware {:entries (s/assert ::entries entries)}))

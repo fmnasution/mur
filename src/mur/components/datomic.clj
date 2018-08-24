@@ -1,7 +1,18 @@
 (ns mur.components.datomic
   (:require
+   [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as c]
    [datomic.api :as dtm]))
+
+;; =================================================================
+;; datomic db spec
+;; =================================================================
+
+(s/def ::uri
+  string?)
+
+(s/def ::datomic-db-config
+  (s/keys :req-un [::uri]))
 
 ;; =================================================================
 ;; protocols
@@ -35,7 +46,7 @@
 
 (defn make-temp-datomic-db
   [option]
-  (-> option
+  (-> (s/assert ::datomic-db-config option)
       (select-keys [:uri])
       (assoc :started? false)
       (map->TempDatomicDB)))
@@ -61,7 +72,7 @@
 
 (defn make-durable-datomic-db
   [option]
-  (-> option
+  (-> (s/assert ::datomic-db-config option)
       (select-keys [:uri])
       (assoc :started? false)
       (map->DurableDatomicDB)))

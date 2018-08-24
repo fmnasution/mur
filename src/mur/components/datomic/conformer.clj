@@ -1,9 +1,17 @@
 (ns mur.components.datomic.conformer
   (:require
+   [clojure.spec.alpha :as s]
    [clojure.java.io :as io]
    [com.stuartsierra.component :as c]
    [io.rkn.conformity :refer [ensure-conforms]]
    [mur.components.datomic :as cptdtm]))
+
+;; =================================================================
+;; datomic conformer spec
+;; =================================================================
+
+(s/def ::path
+  string?)
 
 ;; =================================================================
 ;; datomic conformer

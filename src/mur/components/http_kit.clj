@@ -1,8 +1,19 @@
 (ns mur.components.http-kit
   (:require
+   [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as c]
    [org.httpkit.server :refer [run-server]]
    [mur.components.ring :as cptrng]))
+
+;; =================================================================
+;; web server spec
+;; =================================================================
+
+(s/def ::port
+  pos-int?)
+
+(s/def ::config
+  (s/keys :req-un [::port]))
 
 ;; =================================================================
 ;; web server
@@ -23,7 +34,7 @@
 
 (defn make-web-server
   [option]
-  (-> option
+  (-> (s/assert ::config option)
       (select-keys [:port])
       (map->WebServer)
       (c/using [:handler])))
