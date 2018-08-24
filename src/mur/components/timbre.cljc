@@ -12,19 +12,19 @@
   #{:trace :debug :info :warn :error :fatal :report})
 
 (s/def ::enabled?
-  boolean?)
+  (s/nilable boolean?))
 
 (s/def ::min-level
-  ::level)
+  (s/nilable ::level))
 
 (s/def ::rate-limit
-  (s/coll-of (s/tuple pos-int? pos-int?)))
+  (s/nilable (s/coll-of (s/tuple pos-int? pos-int?))))
 
 (s/def ::fn
-  fn?)
+  (s/nilable ifn?))
 
 (s/def ::async?
-  boolean?)
+  (s/nilable boolean?))
 
 (s/def ::appenders
   (s/map-of keyword? (s/keys :opt-un [::enabled?
@@ -38,28 +38,28 @@
                                                 ::timestamp-opts])])))
 
 (s/def ::ns-whitelist
-  (s/coll-of string?))
+  (s/nilable (s/coll-of string?)))
 
 (s/def ::ns-blacklist
-  (s/coll-of string?))
+  (s/nilable (s/coll-of string?)))
 
 (s/def ::middleware
-  (s/coll-of fn?))
+  (s/nilable (s/coll-of fn?)))
 
 (s/def ::pattern
-  string?)
+  (s/nilable string?))
 
 (s/def ::locale
-  keyword?)
+  (s/nilable keyword?))
 
 (s/def ::timezone
-  keyword?)
+  (s/nilable keyword?))
 
 #?(:clj (s/def ::timestamp-opts
-          (s/keys :req-un [::pattern ::locale ::timezone])))
+          (s/nilable (s/keys :req-un [::pattern ::locale ::timezone]))))
 
 (s/def ::output-fn
-  fn?)
+  (s/nilable ifn?))
 
 (s/def ::option
   (s/keys :req-un [::level
