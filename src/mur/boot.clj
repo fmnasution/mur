@@ -10,20 +10,22 @@
   [system-symbol prev-fileset next-fileset files {:keys [paths regexes]}]
   (when (some? system-symbol)
     (if (empty? files)
-      (btu/info "No `files` to be watched."
-                "Will not attempt to manage `system`'s lifecycles.")
+      (btu/info (str "No `files` to be watched."
+                     "Will not attempt to manage `system`'s lifecycles.\n"))
       (let [input-files (bt/input-files
                          (bt/fileset-diff prev-fileset next-fileset))
-            query-fn     (cond
-                           paths
-                           bt/by-path
+            query-fn    (cond
+                          paths
+                          bt/by-path
 
-                           regexes
-                           bt/by-re
+                          regexes
+                          bt/by-re
 
-                           :else
-                           bt/by-name)
-            files        (if regexes (map re-pattern files) files)]
+                          :else
+                          bt/by-name)
+            files (if (some? regexes)
+                    (into [] (map re-pattern) files)
+                    files)]
         (->> input-files
              (query-fn files)
              (seq)
@@ -32,7 +34,7 @@
 (defn- validate-option
   [{:keys [paths regexes]}]
   (when (and (true? paths) (true? regexes))
-    (btu/fail "Cannot specify both --paths and --regexes to true")
+    (btu/fail "Cannot specify both --paths and --regexes to `true`")
     (throw (ex-info "Incorrect option" {}))))
 
 (bt/deftask system

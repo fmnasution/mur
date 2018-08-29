@@ -19,6 +19,9 @@
  '[samestep.boot-refresh :refer [refresh]]
  '[adzerk.bootlaces :refer [bootlaces! build-jar push-snapshot push-release]])
 
+(def +project-name+
+  'mur)
+
 (def +version+
   "0.1.8-SNAPSHOT")
 
@@ -27,7 +30,7 @@
 (task-options!
  push {:ensure-branch nil
        :repo-map      {:checksum :warn}}
- pom  {:project     'mur
+ pom  {:project     +project-name+
        :version     +version+
        :description "Collection of reusable components for my personal use"
        :url         "http://github.com/fmnasution/mur"
