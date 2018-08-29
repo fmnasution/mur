@@ -19,12 +19,12 @@
 ;; web server
 ;; =================================================================
 
-(defrecord WebServer [port handler server]
+(defrecord WebServer [port ring-handler server]
   c/Lifecycle
   (start [this]
     (if (some? server)
       this
-      (assoc this :server (run-server (cptrng/request-handler handler)
+      (assoc this :server (run-server (cptrng/request-handler ring-handler)
                                       {:port port}))))
   (stop [this]
     (if (nil? server)
@@ -37,4 +37,4 @@
   (-> (s/assert ::config option)
       (select-keys [:port])
       (map->WebServer)
-      (c/using [:handler])))
+      (c/using [:ring-handler])))

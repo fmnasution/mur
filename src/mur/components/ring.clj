@@ -14,16 +14,16 @@
 ;; web request handler head
 ;; =================================================================
 
-(defrecord WebRequestHandlerHead [handler middleware]
+(defrecord RingHead [ring-handler ring-middleware]
   IWebRequestHandler
   (request-handler [this]
-    (let [wrapper (if (some? middleware)
-                    (cptmdw/wrapper middleware)
+    (let [wrapper (if (some? ring-middleware)
+                    (cptmdw/wrapper ring-middleware)
                     identity)]
-      (wrapper (request-handler handler)))))
+      (wrapper (request-handler ring-handler)))))
 
-(defn make-web-request-handler-head
+(defn make-ring-head
   []
   (c/using
-   (map->WebRequestHandlerHead {})
-   [:handler]))
+   (map->RingHead {})
+   [:ring-handler]))
