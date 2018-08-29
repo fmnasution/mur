@@ -23,7 +23,7 @@
   'mur)
 
 (def +version+
-  "0.1.8-SNAPSHOT")
+  "0.1.9-SNAPSHOT")
 
 (bootlaces! +version+)
 
